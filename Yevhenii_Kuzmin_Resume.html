@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yevhenii Kuzmin — Project / Delivery Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a2024;
+    --ink-soft:#232b30;
+    --line-dark:#333c41;
+    --fog:#9aa8a3;
+    --paper:#eff1ec;
+    --card:#ffffff;
+    --slate:#576066;
+    --line:#dbdfd6;
+    --signal:#1e6b4e;
+    --signal-bright:#6fcf9a;
+    --radius-s:3px;
+    --radius-m:6px;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", -apple-system, sans-serif;
+    font-size:15.5px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:"Archivo", sans-serif;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  a{ color:var(--signal); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--signal-bright);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  /* ---------- layout shell ---------- */
+  .page{
+    display:grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar main";
+    max-width:var(--maxw);
+    margin:0 auto;
+    min-height:100vh;
+    background:var(--paper);
+    box-shadow:0 0 60px rgba(0,0,0,0.06);
+  }
+
+  /* ---------- header ---------- */
+  header.hero{
+    grid-area:header;
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--ink);
+    color:#fff;
+    padding:26px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--line-dark);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 28px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 28px);
+    animation:heroIn 0.5s ease-out;
+  }
+  @keyframes heroIn{
+    from{ opacity:0; transform:translateY(-6px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .hero-id h1{
+    font-size:26px;
+    font-weight:800;
+    color:#fff;
+  }
+  .hero-id .role{
+    margin-top:4px;
+    font-size:14.5px;
+    color:var(--signal-bright);
+    font-weight:600;
+  }
+
+  .hero-actions{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .hero-actions .contact-line{ margin-right:2px; }
+
+  .contact-line{
+    display:flex;
+    flex-wrap:wrap;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--fog);
+  }
+  .contact-line a{ color:#e7ece9; }
+  .contact-line a:hover{ color:var(--signal-bright); }
+  .contact-line span{ display:inline-flex; align-items:center; margin-right:16px; }
+  .contact-line span:last-child{ margin-right:0; }
+  .contact-line svg{ width:14px; height:14px; flex:none; opacity:0.85; margin-right:6px; }
+
+  .btn-download{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--signal-bright);
+    color:#0f1a14;
+    font-family:"IBM Plex Sans", sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    border:none;
+    padding:10px 16px;
+    border-radius:var(--radius-s);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-download:hover{ background:#8adfb2; transform:translateY(-1px); }
+  .btn-download svg{ width:15px; height:15px; }
+
+  /* ---------- sidebar ---------- */
+  aside.sidebar{
+    grid-area:sidebar;
+    background:var(--ink-soft);
+    color:#e7ece9;
+    padding:32px 28px 48px;
+    align-self:start;
+    position:sticky;
+    top:93px;
+    max-height:calc(100vh - 93px);
+    overflow-y:auto;
+  }
+  aside.sidebar::-webkit-scrollbar{ width:6px; }
+  aside.sidebar::-webkit-scrollbar-thumb{ background:var(--line-dark); border-radius:3px; }
+
+  .side-block + .side-block{
+    margin-top:30px;
+    padding-top:26px;
+    border-top:1px solid var(--line-dark);
+  }
+  .side-block h2{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--signal-bright);
+    margin-bottom:14px;
+  }
+
+  .skill-group{ margin-bottom:16px; }
+  .skill-group:last-child{ margin-bottom:0; }
+  .skill-group h3{
+    font-size:12px;
+    font-weight:600;
+    color:var(--fog);
+    margin-bottom:8px;
+  }
+  .chip-row{ display:flex; flex-wrap:wrap; }
+  .chip{
+    font-size:11.5px;
+    padding:4px 9px;
+    border:1px solid var(--line-dark);
+    border-radius:20px;
+    color:#dfe6e2;
+    line-height:1.3;
+    margin:0 6px 6px 0;
+  }
+
+  .cert-item, .edu-item{ margin-bottom:14px; }
+  .cert-item:last-child, .edu-item:last-child{ margin-bottom:0; }
+  .cert-item .t, .edu-item .t{ font-size:13.5px; font-weight:600; color:#f2f5f2; }
+  .cert-item .m, .edu-item .m{ font-size:12px; color:var(--fog); margin-top:2px; }
+
+  .lang-item{ margin-bottom:12px; }
+  .lang-item:last-child{ margin-bottom:0; }
+  .lang-top{ display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:5px; }
+  .lang-top .name{ font-weight:600; color:#f2f5f2; }
+  .lang-top .level{ color:var(--fog); font-family:"IBM Plex Mono", monospace; font-size:11px; }
+  .lang-track{ height:5px; background:var(--line-dark); border-radius:3px; overflow:hidden; }
+  .lang-fill{ height:100%; background:var(--signal-bright); border-radius:3px; }
+
+  /* ---------- main content ---------- */
+  main{
+    grid-area:main;
+    padding:40px 44px 72px;
+  }
+
+  .summary{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:3px solid var(--signal);
+    border-radius:var(--radius-m);
+    padding:22px 26px;
+    margin-bottom:44px;
+    max-width:74ch;
+  }
+  .summary h2{
+    font-size:11.5px;
+    text-transform:none;
+    color:var(--signal);
+    font-weight:700;
+    margin-bottom:10px;
+    letter-spacing:0.01em;
+  }
+  .summary p{ margin:0; color:#2c3438; font-size:14.8px; }
+
+  section.timeline-section > h2{
+    font-size:19px;
+    font-weight:700;
+    margin-bottom:26px;
+  }
+
+  .timeline{
+    position:relative;
+    padding-left:26px;
+    border-left:2px solid var(--line);
+  }
+
+  .role{
+    position:relative;
+    padding-bottom:36px;
+  }
+  .role:last-child{ padding-bottom:0; }
+
+  .role::before{
+    content:"";
+    position:absolute;
+    left:-32px;
+    top:5px;
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2.5px solid var(--signal);
+  }
+
+  .role-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:8px 20px;
+    margin-bottom:4px;
+  }
+  .role-title{ font-size:16.5px; font-weight:700; }
+  .role-dates{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--slate);
+    white-space:nowrap;
+  }
+  .role-org{
+    font-size:13.5px;
+    color:var(--signal);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .role-org .tag{
+    color:var(--slate);
+    font-weight:400;
+  }
+
+  .duration{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .duration-track{
+    width:110px;
+    height:4px;
+    background:var(--line);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .duration-fill{
+    height:100%;
+    background:var(--signal);
+    border-radius:2px;
+  }
+  .duration-label{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    color:var(--slate);
+  }
+
+  .role-group{ margin-bottom:14px; }
+  .role-group:last-child{ margin-bottom:0; }
+  .role-group h4{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 6px;
+  }
+
+  ul.bullets{
+    margin:0;
+    padding-left:18px;
+  }
+  ul.bullets li{
+    margin-bottom:6px;
+    color:#333c40;
+    font-size:14px;
+  }
+  ul.bullets li:last-child{ margin-bottom:0; }
+  ul.bullets li::marker{ color:var(--signal); }
+
+  footer.print-hint{
+    max-width:74ch;
+    margin-top:46px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--slate);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .page{
+      grid-template-columns:1fr;
+      grid-template-areas:
+        "header"
+        "main"
+        "sidebar";
+    }
+    header.hero{ padding:22px 22px; }
+    aside.sidebar{
+      position:static;
+      max-height:none;
+      padding:34px 22px 44px;
+    }
+    main{ padding:32px 22px 56px; }
+    .hero-id h1{ font-size:22px; }
+  }
+
+  @media (max-width: 480px){
+    .hero-actions{ flex-direction:column; align-items:flex-start; gap:14px; width:100%; }
+    .contact-line{ flex-direction:column; gap:6px; }
+    .contact-line span{ margin-right:0; }
+    .btn-download{ align-self:flex-start; }
+    .role-head{ flex-direction:column; align-items:flex-start; gap:4px; }
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    @page{ size:A4; margin:14mm 12mm; }
+    html,body{ background:#fff; font-size:11.5px; }
+    .page{ box-shadow:none; grid-template-columns: 220px 1fr; max-width:none; }
+    header.hero{
+      position:static;
+      background:var(--ink) !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
+      padding:16px 20px;
+    }
+    aside.sidebar{
+      position:static;
+      max-height:none;
+      overflow:visible;
+      background:var(--ink-soft) !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
+      padding:22px 18px;
+    }
+    main{ padding:22px 26px; }
+    .btn-download{ display:none; }
+    .summary{ break-inside:avoid; box-shadow:none; }
+    .role{ break-inside:avoid; }
+    a{ color:inherit; text-decoration:none; }
+    footer.print-hint{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="hero-id">
+      <h1>Yevhenii Kuzmin</h1>
+      <div class="role">Project | Delivery Manager</div>
+    </div>
+    <div class="hero-actions">
+      <div class="contact-line">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+380931443936">+38 (093) 144-39-36</a>
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" stroke="none"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+          <a href="mailto:kuzmin.ye.r@gmail.com">kuzmin.ye.r@gmail.com</a>
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+          <a href="https://t.me/yevhil" target="_blank" rel="noopener">@yevhil</a>
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9h3.6v1.8h.05c.5-.95 1.75-1.95 3.6-1.95 3.85 0 4.75 2.3 4.75 5.5V21h-4v-6.3c0-1.5-.03-3.4-2.05-3.4-2.05 0-2.35 1.6-2.35 3.3V21h-3.6z"/></svg>
+          <a href="https://linkedin.com/in/yevheniikuzmin" target="_blank" rel="noopener">/in/yevheniikuzmin</a>
+        </span>
+      </div>
+      <button class="btn-download" onclick="window.print()" title="Opens the print dialog — choose “Save as PDF” as the destination">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+
+    <div class="side-block">
+      <h2>Key Skills &amp; Tools</h2>
+
+      <div class="skill-group">
+        <h3>Project &amp; Resource Management</h3>
+        <div class="chip-row">
+          <span class="chip">SDLC</span><span class="chip">Estimation</span><span class="chip">Task tracking</span>
+          <span class="chip">Scheduling</span><span class="chip">Team coordination</span><span class="chip">Scrum</span>
+          <span class="chip">Kanban (Scrumban)</span><span class="chip">Stakeholder management</span><span class="chip">Financial oversight</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Technical Proficiency</h3>
+        <div class="chip-row">
+          <span class="chip">IT infrastructure</span><span class="chip">Digital asset delivery</span>
+          <span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">HTML/CSS</span>
+          <span class="chip">React</span><span class="chip">React Native</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Creative &amp; Media Production</h3>
+        <div class="chip-row">
+          <span class="chip">TV</span><span class="chip">Print</span><span class="chip">HTML5</span>
+          <span class="chip">Social</span><span class="chip">QA/QC</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Localization &amp; Legal Oversight</h3>
+        <div class="chip-row">
+          <span class="chip">Content adaptation</span><span class="chip">Usage rights negotiation</span>
+          <span class="chip">Stock asset licensing</span><span class="chip">Asset metadata mgmt.</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Digital Tools</h3>
+        <div class="chip-row">
+          <span class="chip">ChatGPT</span><span class="chip">Gemini</span><span class="chip">Claude</span>
+          <span class="chip">Weborama</span><span class="chip">Peach</span><span class="chip">Adform</span>
+          <span class="chip">Google Workspace</span><span class="chip">Microsoft Office</span><span class="chip">Figma</span>
+          <span class="chip">Axure</span><span class="chip">Jira/Confluence</span><span class="chip">Miro</span>
+          <span class="chip">Trello</span><span class="chip">Notion</span><span class="chip">BrowserStack</span><span class="chip">Swagger</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Communication &amp; Working Style</h3>
+        <div class="chip-row">
+          <span class="chip">Effective communicator</span><span class="chip">Self-organized</span>
+          <span class="chip">Detail-oriented</span><span class="chip">Process facilitator</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-block">
+      <h2>Certifications</h2>
+      <div class="cert-item">
+        <div class="t">Project Management Certification</div>
+        <div class="m">Hillel IT School · 2021–2022</div>
+      </div>
+      <div class="cert-item">
+        <div class="t">AI for Project Management</div>
+        <div class="m">Robotdreams (Laba) · August 2026</div>
+      </div>
+      <div class="cert-item">
+        <div class="t">PMP Certification</div>
+        <div class="m">In progress · targeting September 2027</div>
+      </div>
+    </div>
+
+    <div class="side-block">
+      <h2>Education</h2>
+      <div class="edu-item">
+        <div class="t">Master's Degree, Management</div>
+        <div class="m">Dnipro Polytechnic, Ukraine · 2019–2021</div>
+      </div>
+      <div class="edu-item">
+        <div class="t">Bachelor's Degree, Computer Science</div>
+        <div class="m">Dnipro Polytechnic, Ukraine · 2016–2019</div>
+      </div>
+      <div class="edu-item">
+        <div class="t">Exchange Program, International Studies</div>
+        <div class="m">Hochschule Reutlingen, Germany · 2019–2020</div>
+      </div>
+    </div>
+
+    <div class="side-block">
+      <h2>Languages</h2>
+      <div class="lang-item">
+        <div class="lang-top"><span class="name">English</span><span class="level">B2</span></div>
+        <div class="lang-track"><div class="lang-fill" style="width:65%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-top"><span class="name">Ukrainian</span><span class="level">Native</span></div>
+        <div class="lang-track"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-top"><span class="name">Russian</span><span class="level">Bilingual</span></div>
+        <div class="lang-track"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-top"><span class="name">German</span><span class="level">A1.1</span></div>
+        <div class="lang-track"><div class="lang-fill" style="width:15%"></div></div>
+      </div>
+    </div>
+
+  </aside>
+
+  <main>
+
+    <div class="summary">
+      <h2>Professional Summary</h2>
+      <p>Project / Delivery Manager with 6+ years leading delivery for international brands and startups across social networking, automotive, e-commerce, and digital content/localization. Most recently led a 16-person engineering and QA team at an early-stage startup, managing delivery through flow metrics (cycle time, throughput, defect rate), budget oversight, and an active risk register, while aligning roadmaps with client and internal stakeholders. Background includes full-cycle multimedia and localization delivery across Europe, India, and Latin America, managing teams of up to 10 people across as many as 9 concurrent projects and 500+ client quotes. Skilled in Agile/Scrum delivery and applying AI tools to streamline production pipelines; PMP certification in progress.</p>
+    </div>
+
+    <section class="timeline-section">
+      <h2>Experience</h2>
+      <div class="timeline">
+
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">Project Manager</span>
+            <span class="role-dates">Sep 2025 – Sep 2026</span>
+          </div>
+          <div class="role-org">4GOO <span class="tag">— Germany / Ukraine (Remote), Social Networking, Startup</span></div>
+          <div class="duration">
+            <div class="duration-track"><div class="duration-fill" style="width:27%"></div></div>
+            <span class="duration-label">~1 yr tenure</span>
+          </div>
+
+          <div class="role-group">
+            <h4>Day-to-day operations &amp; performance management</h4>
+            <ul class="bullets">
+              <li>Ensured consistent, high-quality delivery against project KPIs: on-time delivery rate, planned-vs-actual spend variance, requirements delivered, defect rate, lead time, cycle time, throughput, and blocked time.</li>
+              <li>Led a project team of 10 engineers (front-end, back-end, mobile) and 6 QA specialists.</li>
+              <li>Managed workforce planning, including recruitment, scheduling, and allocation.</li>
+              <li>Prepared delivery reports for internal and client use.</li>
+            </ul>
+          </div>
+
+          <div class="role-group">
+            <h4>Client relationship &amp; partnership</h4>
+            <ul class="bullets">
+              <li>Acted as primary owner of the client relationship, facilitating strategic meetings and weekly/monthly business reviews.</li>
+              <li>Built trust-based, partner-level relationships with key decision-makers.</li>
+              <li>Proactively managed client expectations and risk, keeping the project risk register up to date.</li>
+            </ul>
+          </div>
+
+          <div class="role-group">
+            <h4>Strategic management &amp; cross-functional leadership</h4>
+            <ul class="bullets">
+              <li>Defined and executed long-term project strategy aligned with client goals and company vision.</li>
+              <li>Identified and implemented opportunities for scaling, process optimization, and innovation, translating strategy into measurable roadmaps.</li>
+              <li>Collaborated across Dev, Operations, and QA to align the roadmap between client and internal stakeholders.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">Project Manager</span>
+            <span class="role-dates">2022 – Sep 2025</span>
+          </div>
+          <div class="role-org">Ciklum |.Monks <span class="tag">— Ukraine, Automotive, E-commerce</span></div>
+          <div class="duration">
+            <div class="duration-track"><div class="duration-fill" style="width:100%"></div></div>
+            <span class="duration-label">~3.75 yr tenure</span>
+          </div>
+          <ul class="bullets">
+            <li>Managed full-cycle production and delivery of multimedia assets (TV, HTML5 banners, social, print) for a worldwide brand across global markets.</li>
+            <li>Led project intake, planning/scheduling, and resource allocation across three regions (Europe, India, Buenos Aires).</li>
+            <li>Maintained direct communication with internal and external clients on asset delivery, timelines, and technical requirements.</li>
+            <li>Created QA briefs, performed final QC checks, and managed asset testing/distribution via third-party platforms (Weborama, Adform, Peach).</li>
+            <li>Tracked internal and external project budgets, including out-of-pocket (OOP) costs.</li>
+            <li>Delivered 500+ quotes for projects of varying scale over three years.</li>
+            <li>Managed cross-functional teams of 2–10 people across 3–9 concurrent projects.</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">Junior Project Manager / Delivery Team Lead</span>
+            <span class="role-dates">2021 – 2022</span>
+          </div>
+          <div class="role-org">Ciklum |.Monks <span class="tag">— Ukraine, Digital Content &amp; Localization</span></div>
+          <div class="duration">
+            <div class="duration-track"><div class="duration-fill" style="width:27%"></div></div>
+            <span class="duration-label">~1 yr tenure</span>
+          </div>
+          <ul class="bullets">
+            <li>Developed onboarding documentation to support new team members' ramp-up and performance.</li>
+            <li>Onboarded and managed a 5-member team delivering localization projects for EU and USA markets.</li>
+            <li>Assisted project managers with tracking projects, delegating tasks, and providing client updates.</li>
+            <li>Participated in senior management meetings to streamline processes across media projects on the account.</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <div class="role-head">
+            <span class="role-title">Content Producer</span>
+            <span class="role-dates">2020 – 2021</span>
+          </div>
+          <div class="role-org">Ciklum |.Monks <span class="tag">— Ukraine, Digital Content &amp; Localization</span></div>
+          <div class="duration">
+            <div class="duration-track"><div class="duration-fill" style="width:27%"></div></div>
+            <span class="duration-label">~1 yr tenure</span>
+          </div>
+          <ul class="bullets">
+            <li>Contributed to EU-targeted creative adaptation and localized content for international brands.</li>
+            <li>Managed CMS content for a major fashion brand.</li>
+            <li>Participated in Agile/Scrum ceremonies.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="print-hint">
+      Click “Download PDF” in the header to open your browser's print dialog, then choose “Save as PDF” as the destination.
+    </footer>
+
+  </main>
+
+</div>
+
+</body>
+</html>

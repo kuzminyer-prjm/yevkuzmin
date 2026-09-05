@@ -16,7 +16,7 @@
     --sidebar-fog:#94a3b8;
     --paper:#f8fafc;
     --card:#ffffff;
-    --muted:#64748b;
+    --muted:#475569;
     --line:#e2e8f0;
     --accent:#2563eb;
     --accent-hover:#1d4ed8;
@@ -28,7 +28,6 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
   body{
     margin:0;
     background:var(--paper);
@@ -79,22 +78,23 @@
     z-index:20;
     background:var(--sidebar);
     color:#fff;
-    padding:26px 40px;
+    padding:22px 40px;
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:24px;
     flex-wrap:wrap;
     border-bottom:1px solid var(--sidebar-line);
-    animation:heroIn 0.5s ease-out;
   }
-  @keyframes heroIn{
-    from{ opacity:0; transform:translateY(-6px); }
-    to{ opacity:1; transform:translateY(0); }
+
+  .hero-id-group{
+    display:flex;
+    align-items:center;
+    gap:20px;
   }
 
   .hero-id h1{
-    font-size:28px;
+    font-size:30px;
     font-weight:800;
     color:#fff;
   }
@@ -138,23 +138,16 @@
     background:var(--sidebar);
     color:#e2e8f0;
     padding:34px 28px 48px;
-    align-self:start;
-    position:sticky;
-    top:97px;
-    max-height:calc(100vh - 97px);
-    overflow-y:auto;
   }
-  aside.sidebar::-webkit-scrollbar{ width:6px; }
-  aside.sidebar::-webkit-scrollbar-thumb{ background:var(--sidebar-line); border-radius:3px; }
 
   .avatar-frame{
-    width:76px;
-    height:76px;
+    width:112px;
+    height:112px;
+    flex:none;
     border-radius:50%;
     background:linear-gradient(155deg, #1d4ed8, #0f172a);
-    border:2px solid var(--accent-bright);
+    border:3px solid var(--accent-bright);
     overflow:hidden;
-    margin:0 0 24px;
   }
   .avatar-frame img{
     width:100%;
@@ -330,19 +323,18 @@
         "sidebar"
         "main";
     }
-    header.hero{ padding:22px; }
-    aside.sidebar{
-      position:static;
-      max-height:none;
-      padding:32px 22px 40px;
-    }
+    header.hero{ padding:20px 22px; }
+    aside.sidebar{ padding:32px 22px 40px; }
     main{ padding:32px 22px 56px; }
     .hero-id h1{ font-size:23px; }
+    .avatar-frame{ width:88px; height:88px; }
   }
 
   @media (max-width: 480px){
     header.hero{ flex-direction:column; align-items:flex-start; gap:16px; }
     .btn-download{ align-self:flex-start; }
+    .avatar-frame{ width:72px; height:72px; }
+    .hero-id h1{ font-size:21px; }
     .role-head{ flex-direction:column; align-items:flex-start; gap:4px; }
   }
 
@@ -357,6 +349,7 @@
       -webkit-print-color-adjust:exact; print-color-adjust:exact;
       padding:16px 20px;
     }
+    .avatar-frame{ width:60px; height:60px; }
     aside.sidebar{
       position:static;
       max-height:none;
@@ -380,9 +373,17 @@
 <div class="page">
 
   <header class="hero">
-    <div class="hero-id">
-      <h1>Yevhenii Kuzmin</h1>
-      <div class="role">Project | Delivery Manager</div>
+    <div class="hero-id-group">
+      <!-- Paste the direct/raw link to your photo hosted on GitHub as the src below,
+           e.g. https://raw.githubusercontent.com/USERNAME/REPO/main/photo.jpg
+           If the link is left as-is or is invalid, this just shows an empty circle. -->
+      <div class="avatar-frame">
+        <img src="PASTE-YOUR-GITHUB-PHOTO-LINK-HERE" alt="Yevhenii Kuzmin" onerror="this.remove()">
+      </div>
+      <div class="hero-id">
+        <h1>Yevhenii Kuzmin</h1>
+        <div class="role">Project | Delivery Manager</div>
+      </div>
     </div>
     <a class="btn-download" href="Kuzmin_Yevhenii_Resume_2026.pdf" download="Kuzmin_Yevhenii_Resume_2026.pdf">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -391,13 +392,6 @@
   </header>
 
   <aside class="sidebar">
-
-    <!-- Paste the direct/raw link to your photo hosted on GitHub as the src below,
-         e.g. https://raw.githubusercontent.com/USERNAME/REPO/main/photo.jpg
-         If the link is left as-is or is invalid, this just shows an empty circle. -->
-    <div class="avatar-frame">
-      <img src="1139588071154191105.jpg" alt="Yevhenii Kuzmin" onerror="this.remove()">
-    </div>
 
     <div class="side-block">
       <h2>Contact</h2>

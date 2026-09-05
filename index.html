@@ -140,9 +140,10 @@
     border-radius:var(--radius-s);
     cursor:pointer;
     white-space:nowrap;
+    text-decoration:none;
     transition:transform 0.15s ease, background 0.15s ease;
   }
-  .btn-download:hover{ background:#8adfb2; transform:translateY(-1px); }
+  .btn-download:hover{ background:#8adfb2; transform:translateY(-1px); text-decoration:none; color:#0f1a14; }
   .btn-download svg{ width:15px; height:15px; }
 
   /* ---------- sidebar ---------- */
@@ -422,10 +423,12 @@
           <a href="https://linkedin.com/in/yevheniikuzmin" target="_blank" rel="noopener">/in/yevheniikuzmin</a>
         </span>
       </div>
-      <button class="btn-download" onclick="window.print()" title="Opens the print dialog — choose “Save as PDF” as the destination">
+      <!-- Paste the direct/raw link to your PDF hosted on GitHub as the href below,
+           e.g. https://raw.githubusercontent.com/USERNAME/REPO/main/Yevhenii_Kuzmin_Resume.pdf -->
+      <a class="btn-download" href="Kuzmin_Yevhenii_Resume_2026.pdf" download="Yevhenii_Kuzmin_Resume.pdf" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download PDF
-      </button>
+      </a>
     </div>
   </header>
 
@@ -561,7 +564,7 @@
           <div class="role-org">4GOO <span class="tag">— Germany / Ukraine (Remote), Social Networking, Startup</span></div>
           <div class="duration">
             <div class="duration-track"><div class="duration-fill" style="width:27%"></div></div>
-            <span class="duration-label">~1 yr tenure</span>
+            <span class="duration-label">~1 year</span>
           </div>
 
           <div class="role-group">
@@ -601,7 +604,7 @@
           <div class="role-org">Ciklum |.Monks <span class="tag">— Ukraine, Automotive, E-commerce</span></div>
           <div class="duration">
             <div class="duration-track"><div class="duration-fill" style="width:100%"></div></div>
-            <span class="duration-label">~3.75 yr tenure</span>
+            <span class="duration-label">~3.75 years</span>
           </div>
           <ul class="bullets">
             <li>Managed full-cycle production and delivery of multimedia assets (TV, HTML5 banners, social, print) for a worldwide brand across global markets.</li>
@@ -622,7 +625,7 @@
           <div class="role-org">Ciklum |.Monks <span class="tag">— Ukraine, Digital Content &amp; Localization</span></div>
           <div class="duration">
             <div class="duration-track"><div class="duration-fill" style="width:27%"></div></div>
-            <span class="duration-label">~1 yr tenure</span>
+            <span class="duration-label">~1 year</span>
           </div>
           <ul class="bullets">
             <li>Developed onboarding documentation to support new team members' ramp-up and performance.</li>
@@ -640,7 +643,7 @@
           <div class="role-org">Ciklum |.Monks <span class="tag">— Ukraine, Digital Content &amp; Localization</span></div>
           <div class="duration">
             <div class="duration-track"><div class="duration-fill" style="width:27%"></div></div>
-            <span class="duration-label">~1 yr tenure</span>
+            <span class="duration-label">~1 year</span>
           </div>
           <ul class="bullets">
             <li>Contributed to EU-targeted creative adaptation and localized content for international brands.</li>
@@ -653,7 +656,7 @@
     </section>
 
     <footer class="print-hint">
-      Click “Download PDF” in the header to open your browser's print dialog, then choose “Save as PDF” as the destination.
+      The “Download PDF” button links directly to the PDF file — update the link in the page's source once it's hosted on GitHub.
     </footer>
 
   </main>
